@@ -1,12 +1,31 @@
-from pydantic import BaseModel, EmailStr
+from sqlalchemy import Boolean, Column, Integer, String, Text
+from database import Base
 
 
-class User(BaseModel):
-    id: int
-    email: EmailStr
-    password: str
-    phone_number: int
-    country_code: int
-    activated: bool = True  # should automatically activate account after successful signup to skip sending otp for now
-    first_name: str
-    last_name: str
+class User(Base):
+    __tablename__ = 'users'
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    email = Column(String(121), unique=True, index=True)
+    password = Column(String(200))
+    phone = Column(String(30))
+    country_code = Column(String(10))
+    is_activated = Column(Boolean)
+    first_name = Column(String(41))
+    last_name = Column(String(41))
+    middle_name = Column(String(41))
+    profile_photo = Column(Text)
+    country = Column(String(81))
+    state = Column(String(81))
+
+
+class BankInfo(Base):
+    __tablename__ = "bankinfo"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer)  # foreign key for User.id
+    bank_code = Column(String(21))
+    account_number = Column(String(51))
+    account_name = Column(String(51))
+    status = Column(String(21))
+    bank_name = Column(String(201))
