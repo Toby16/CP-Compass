@@ -1,2 +1,4 @@
-cp-compass_env
+CP_COMPASS/script.sh
+CP_COMPASS/__pycache__/
 __pycache__/
+cp-compass_env/
