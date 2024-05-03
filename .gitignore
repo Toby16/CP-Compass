@@ -3,3 +3,4 @@ CP_COMPASS/__pycache__/
 __pycache__/
 cp-compass_env/
 .env
+.todo
