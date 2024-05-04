@@ -21,3 +21,7 @@ class signup_User(BaseModel):
 class signin_User(BaseModel):
     email: EmailStr
     password:  str
+
+
+class get_User(BaseModel):
+    email: EmailStr
