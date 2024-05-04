@@ -3,7 +3,7 @@ from CP_COMPASS import app
 from fastapi import status, Depends, HTTPException
 from CP_COMPASS.models import User
 from CP_COMPASS.helper import email_validator
-from CP_COMPASS.pydantic_models import signup_User, signin_User
+from CP_COMPASS.pydantic_models import signup_User, signin_User, get_User
 from typing import Annotated
 from sqlalchemy.orm import Session
 from database import SessionLocal
@@ -90,3 +90,38 @@ def sign_up(data: signup_User, db: db_dependency):
         "statusCode": 201,
         "message": "Account created successfully!"
     }, 201
+
+
+
+@app.post("/get_user", status_code=status.HTTP_200_OK)
+@app.post("/get_user/", status_code=status.HTTP_200_OK)
+def get_user(data: get_User, db: db_dependency):
+    """
+    Endpoint to return details of a user
+    """
+    # validate email
+    data.email = email_validator(data.email)
+
+
+    # return data.email
+    check_user = db.query(User).filter(User.email == data.email).first()
+    if check_user is None:
+        raise HTTPException(status_code=404, detail="User not found!")
+
+    user_dict = {}
+    user_dict["email"] = check_user.email
+    user_dict["phone"] = check_user.phone
+    user_dict["first_name"] = check_user.first_name
+    user_dict["last_name"] = check_user.last_name
+    user_dict["middle_name"] = check_user.middle_name
+    user_dict["country_code"] = check_user.country_code
+    user_dict["country"] = check_user.country
+    user_dict["state"] = check_user.state
+    user_dict["profile_photo"] = check_user.profile_photo
+    
+    #del check_user["password"]
+    return {
+        "statusCode": 200,
+        "message": "success!",
+        "data": user_dict
+    }
