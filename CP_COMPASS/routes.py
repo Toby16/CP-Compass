@@ -67,7 +67,7 @@ def sign_in(data: signin_User, db: db_dependency):
 
 @app.post("/signup", status_code=status.HTTP_201_CREATED)
 @app.post("/signup/", status_code=status.HTTP_201_CREATED)
-def sign_up(data: signup_User, db: db_dependency, wallet_data=wallet_model):
+def sign_up(data: signup_User, db: db_dependency):
     """
     Endpoint to sign-up users
     """
