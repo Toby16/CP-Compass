@@ -25,3 +25,19 @@ class signin_User(BaseModel):
 
 class get_User(BaseModel):
     email: EmailStr
+
+
+class wallet_model(BaseModel):
+    email: EmailStr
+    balance: float = 00.00
+    currency: str = "NGN"
+
+
+class withdraw_model(BaseModel):
+    email: EmailStr
+    amount: float
+
+
+class deposit_model(BaseModel):
+    email: EmailStr
+    amount: float
