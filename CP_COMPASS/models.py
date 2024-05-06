@@ -1,4 +1,7 @@
-from sqlalchemy import Boolean, Column, Integer, String, Text
+from sqlalchemy import (
+    Boolean, Column, Integer,
+    String, Text, Float, ForeignKey
+)
 from database import Base
 
 
@@ -29,3 +32,12 @@ class BankInfo(Base):
     account_name = Column(String(51))
     status = Column(String(21))
     bank_name = Column(String(201))
+
+
+class Wallet(Base):
+    __tablename__ = "wallet"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    email = Column(String(121), unique=True, index=True)
+    currency = Column(String(10))
+    balance = Column(Float)
