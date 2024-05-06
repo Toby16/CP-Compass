@@ -25,6 +25,13 @@ db_dependency = Annotated[Session, Depends(get_db)]
 
 
 
+@app.get("/")
+def index():
+    return {
+        "statusCode": 200,
+        "message": "nothing to see here!"
+    }
+
 
 # [ AUTH ]
 
