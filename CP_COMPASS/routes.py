@@ -6,7 +6,8 @@ from CP_COMPASS.helper import email_validator
 from CP_COMPASS.pydantic_models import (
     signup_User, signin_User,
     get_User, wallet_model,
-    withdraw_model, deposit_model
+    withdraw_model, deposit_model,
+    update_user_model
 )
 from typing import Annotated
 from sqlalchemy.orm import Session
@@ -151,6 +152,57 @@ def get_user(data: get_User, db: db_dependency):
         "statusCode": 200,
         "message": "success!",
         "data": user_dict
+    }
+
+
+
+@app.post("/update_user", status_code=status.HTTP_200_OK)
+@app.post("/update_user/", status_code=status.HTTP_200_OK)
+def user_update(data: update_user_model, db: db_dependency):
+    """
+    Update user profile
+    """
+    # validate email
+    if data.email is not None:
+        data.email = email_validator(data.email)
+
+    # authenticate user
+    check_user = db.query(User).filter(User.email == data.email).first()
+    if check_user is None:
+        raise HTTPException(status_code=404, detail={"statusCode": 404, "message": "User not found!"})
+
+    # explicitly validate each data
+    if data.phone is not None:
+        check_user.phone = data.phone
+
+    if data.country_code is not None:
+        check_user.country_code = data.country_code
+
+    if data.first_name is not None:
+        check_user.first_name = data.first_name
+
+    if data.last_name is not None:
+        check_user.last_name = data.last_name
+
+    if data.middle_name is not None:
+        check_user.middle_name = data.middle_name
+
+    if data.profile_photo is not None:
+        check_user.profile_photo = data.profile_photo
+
+    if data.country is not None:
+        check_user.country = data.country
+
+    if data.state is not None:
+        check_user.state = data.state
+
+
+    # commit changes if any
+    db.commit()
+
+    return {
+        "statusCode": 200,
+        "message": "successful! - user profile updated!"
     }
 
 
