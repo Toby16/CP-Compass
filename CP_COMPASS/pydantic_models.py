@@ -9,7 +9,6 @@ class signup_User(BaseModel):
     password: str
     phone: str
     country_code: str
-    is_activated: bool = True  # should automatically activate account after successful signup to skip sending otp for now
     first_name: str
     last_name: str
     profile_photo: str = ""

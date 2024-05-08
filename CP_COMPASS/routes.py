@@ -84,14 +84,15 @@ def sign_up(data: signup_User, db: db_dependency):
         raise HTTPException(status_code=400, detail="User already esists")
 
 
-    # store t0 db
+    # store to db
     data = data.dict()
     new_user = User(
         email=data["email"],
         password=data["password"],
         phone=data["phone"],
         country_code=data["country_code"],
-        is_activated=data["is_activated"],
+        # is_activated=data["is_activated"],
+        is_activated=True,
         first_name=data["first_name"],
         last_name=data["last_name"],
         middle_name=data["middle_name"],
