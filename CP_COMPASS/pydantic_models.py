@@ -41,3 +41,15 @@ class withdraw_model(BaseModel):
 class deposit_model(BaseModel):
     email: EmailStr
     amount: float
+
+
+class update_user_model(BaseModel):
+    email: EmailStr
+    phone: Optional[str] = None
+    country_code: Optional[str] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    middle_name: Optional[str] = None
+    profile_photo: Optional[str] = None
+    country: Optional[str] = None
+    state: Optional[str] = None
